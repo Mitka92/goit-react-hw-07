@@ -1,12 +1,14 @@
 import { IoIosContact } from 'react-icons/io';
 import { FaPhone } from 'react-icons/fa6';
 import { IconContext } from 'react-icons';
-import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact } from '../../redux/contactsOps';
+import { selectIsLoading } from '../../redux/contactsSlice';
 import css from './Contact.module.css';
 
 const Contact = ({ id, name, number }) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
   return (
     <li className={css.contact}>
       <span className={css.info}>
@@ -30,6 +32,7 @@ const Contact = ({ id, name, number }) => {
         </span>
       </span>
       <button
+        disabled={isLoading}
         type="button"
         className={css.btn}
         onClick={() => dispatch(deleteContact(id))}
